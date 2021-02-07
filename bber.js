@@ -21,12 +21,20 @@ app.auth({
           d = item.date,data = d.getFullYear()+'/'+(d.getMonth()+1)+'/'+d.getDate() +' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds()
           dataTime = '<p class="datatime">'+data+'</p>'
           dataCont = '<p class="datacont">'+urlToLink(item.content)+'</p>'
-          dataFrom = item.from ? '<p class="datafrom"><small>#'+item.from+'</small></p>' : ''
-          resCont += '<li class="item"><div>'+dataTime+dataCont+dataFrom+'</div></li>'
+          var from_icon = '';
+          if (item.from == "iPhone"){
+            from_icon = '<i class="fas fa-mobile-alt"></i>';
+          }else if (item.from == "MacBook"){
+            from_icon = '<i class="fas fa-laptop"></i>';
+          }else{
+            from_icon = '<i class="fab fa-weixin" style="font-size: 0.6rem"></i>';
+          };
+          dataFrom = item.from ? '<p class="datafrom"><small>'+ from_icon + item.from+'</small></p>' : '';
+          resCont += '<li class="item"><div>'+dataTime+dataCont+dataFrom+'</div></li>';
         }); 
         $(bbClass).append('<section class="timeline page-'+page+'"><ul><div class="list">'+resCont+'</div></ul></section>')
         $('button.button-load').text('加载更多')
-        $('html,body').animate({ scrollTop: $('.timeline.page-'+page).offset().top - 20 }, 500)
+        // $('html,body').animate({ scrollTop: $('.timeline.page-'+page).offset().top - 20 }, 500)
         if(page*per >= count){
           $('.load').remove()
           return
