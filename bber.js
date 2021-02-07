@@ -26,8 +26,10 @@ app.auth({
             from_icon = '<i class="fas fa-mobile-alt"></i>';
           }else if (item.from == "MacBook"){
             from_icon = '<i class="fas fa-laptop"></i>';
-          }else{
+          }else if (item.from == "微信公众号"){
             from_icon = '<i class="fab fa-weixin" style="font-size: 0.6rem"></i>';
+          }else{
+            from_icon = '<i class="fas fa-tools"></i>';
           };
           dataFrom = item.from ? '<p class="datafrom"><small>'+ from_icon + item.from+'</small></p>' : '';
           resCont += '<li class="item"><div>'+dataTime+dataCont+dataFrom+'</div></li>';
