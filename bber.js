@@ -56,8 +56,6 @@ app.auth({
   })
 }).catch(err => {
   console.log(err)
-  delCookie()
-  location.reload();
 });
 
 //删除cookies
