@@ -5,7 +5,7 @@ if (document.querySelector('#bber-loading')) {
 
 if (document.querySelector('#bber')) {
   app.auth({
-    persistence: "none" //避免与同实例冲突
+    persistence: "local" //避免与同实例冲突
   }).anonymousAuthProvider().signIn().then(() => {
     var bbClass = '#bber'
     $(bbClass).after('<div class="load"><button class="load-btn button-load">加载中……</button></div>')
