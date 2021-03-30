@@ -29,11 +29,13 @@ if (document.querySelector('#bber')) {
           dataTime = '<p class="datatime">'+data+'</p>'
           dataCont = '<p class="datacont">'+urlToLink(item.content)+'</p>'
           var from_icon = '';
-          if (item.from == "iPhone"){
+          if (item.from.indexOf("iPhone") != -1){
             from_icon = '<i class="fas fa-mobile-alt"></i>';
-          }else if (item.from == "MacBook"){
+          }else if (item.from.indexOf("iPad") != -1){
+            from_icon = '<i class="fas fa-tablet-alt"></i>';
+          }else if (item.from.indexOf("MacBook") != -1){
             from_icon = '<i class="fas fa-laptop"></i>';
-          }else if (item.from == "微信公众号"){
+          }else if (item.from.indexOf("微信") != -1){
             from_icon = '<i class="fab fa-weixin" style="font-size: 0.6rem"></i>';
           }else{
             from_icon = '<i class="fas fa-tools"></i>';
