@@ -86,7 +86,7 @@ str =str.replace(re_forpic,function (imgurl) {
 str =str.replace(re,function (website) {
   return " <a href='" + website + "'rel='noopener' target='_blank'>↘链接↙</a> ";
 });
-str = qqWechatEmotionParser(str)
+// str = qqWechatEmotionParser(str)
 return str; 
 }
 /*
