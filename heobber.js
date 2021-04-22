@@ -4,7 +4,7 @@
 // }
 
 function getbbdata(){
-  var bbsurl = apiurl
+  var bbsurl = bbapiurl
   
   var httpRequest = new XMLHttpRequest();//第一步：建立所需的对象
   httpRequest.open('GET', bbsurl, true);//第二步：打开连接  将请求参数写在url中  ps:"./Ptest.php?name=test&nameone=testone"
