@@ -4,7 +4,7 @@
 // }
 
 function getbbdata(){
-  var bbsurl = "https://7a68-zhheo-0g8unj30bfbeb210-1302424805.tcb.qcloud.la/json/bber.json?sign=6162122afe14a6b7d3f837bb79b02fd9&t=1612691873"
+  var bbsurl = "https://7a68-zhheo-0g8unj30bfbeb210-1302424805.tcb.qcloud.la/json/bber-list.json?sign=76de38899f2c2447e99e8058d5216626&t=1619060348"
   
   var httpRequest = new XMLHttpRequest();//第一步：建立所需的对象
   httpRequest.open('GET', bbsurl, true);//第二步：打开连接  将请求参数写在url中  ps:"./Ptest.php?name=test&nameone=testone"
@@ -40,22 +40,25 @@ var generateBBHtml = array => {
   if (array.length) {
     for (let i = 0; i < array.length; i++) {
       var from_icon = '';
-      if (array[i].from == "iPhone"){
-        from_icon = '<i class="fas fa-mobile-alt"></i>';
-      }else if (array[i].from == "MacBook"){
-        from_icon = '<i class="fas fa-laptop"></i>';
-      }else if (array[i].from == "微信公众号"){
-        from_icon = '<i class="fab fa-weixin" style="font-size: 0.6rem"></i>';
-      }else{
-        from_icon = '<i class="fas fa-tools"></i>';
-      };
+          if (array[i].from.indexOf("iPhone") != -1){
+            from_icon = '<i class="fas fa-mobile-alt"></i>';
+          }else if (array[i].from.indexOf("iPad") != -1){
+            from_icon = '<i class="fas fa-tablet-alt"></i>';
+          }else if (array[i].from.indexOf("Mac") != -1){
+            from_icon = '<i class="fas fa-laptop"></i>';
+          }else if (array[i].from.indexOf("微信") != -1){
+            from_icon = '<i class="fab fa-weixin" style="font-size: 0.6rem"></i>';
+          }else{
+            from_icon = '<i class="fas fa-tools"></i>';
+          };
 
-      var d = new Date(array[i].date)
-      var dtime = d.getFullYear()+'/'+(d.getMonth()+1)+'/'+d.getDate()
-      var dataTime = '<p class="datatime">'+dtime+'</p>'
+      var d = new Date(array[i].date);
+      var dtime = array[i].date,data = d.getFullYear()+'/'+(d.getMonth()+1)+'/'+d.getDate() +' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
+      var dataCont = '<p class="datacont">'+urlToLink(array[i].content)+'</p>';
+      var dataTime = '<p class="datatime">'+data+'</p>';
 
 
-      result += `<li class="item"><div>`+ dataTime  + `<p class="datacont">`+ array[i].content +`</p><p class="datafrom"><small>`+ from_icon + array[i].from +`</small></p></div></li>`;
+      result += `<li class="item"><div>`+ dataTime  + dataCont +`</p><p class="datafrom"><small>`+ from_icon + array[i].from +`</small></p></div></li>`;
     }
   } else {
     result += '!{_p("aside.card_funds.zero")}';
@@ -63,7 +66,9 @@ var generateBBHtml = array => {
   result += '</div></ul></section>'
   
   var $dom = document.querySelector('#bber');
+  
   $dom.innerHTML = result;
+  Lately({ 'target': '#bber .datatime' });
   window.lazyLoadInstance && window.lazyLoadInstance.update();
   window.pjax && window.pjax.refresh($dom);
 }
@@ -71,65 +76,6 @@ var generateBBHtml = array => {
 if (document.querySelector('#bber')) {
   getbbdata()
 }
-
-// if (document.querySelector('#bber')) {
-//   app.auth({
-//     persistence: "none" //避免与同实例冲突
-//   }).anonymousAuthProvider().signIn().then(() => {
-//     var bbClass = '#bber'
-//     $(bbClass).after('<div class="load"><button class="load-btn button-load">加载中……</button></div>')
-//     const db = app.database()
-//     const collection = db.collection('talks')
-//     var count=0, per = 9,page = 1
-//     collection.count(function(err,res){
-//       count = res.total
-//       loading_pic.innerHTML = ``;
-//       $(bbClass).append('<p class="count">共 <span class="count-data">'+count+'</span> 条</p>')
-//       getList()
-//     })
-//     function getList(){
-//       if((page-1)*per >= count){
-//         return
-//       }
-//       var d,date,resCont=''
-//       collection.limit(per).skip((page-1)*per).orderBy('date','desc').get(function(err, res) {
-//         (res.data).forEach(item => {
-//           d = item.date,data = d.getFullYear()+'/'+(d.getMonth()+1)+'/'+d.getDate() +' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds()
-//           dataTime = '<p class="datatime">'+data+'</p>'
-//           dataCont = '<p class="datacont">'+urlToLink(item.content)+'</p>'
-//           var from_icon = '';
-//           if (item.from == "iPhone"){
-//             from_icon = '<i class="fas fa-mobile-alt"></i>';
-//           }else if (item.from == "MacBook"){
-//             from_icon = '<i class="fas fa-laptop"></i>';
-//           }else if (item.from == "微信公众号"){
-//             from_icon = '<i class="fab fa-weixin" style="font-size: 0.6rem"></i>';
-//           }else{
-//             from_icon = '<i class="fas fa-tools"></i>';
-//           };
-//           dataFrom = item.from ? '<p class="datafrom"><small>'+ from_icon + item.from+'</small></p>' : '';
-//           resCont += '<li class="item"><div>'+dataTime+dataCont+dataFrom+'</div></li>';
-//         }); 
-//         $(bbClass).append('<section class="timeline page-'+page+'"><ul><div class="list">'+resCont+'</div></ul></section>')
-//         $('button.button-load').text('加载更多')
-//         // $('html,body').animate({ scrollTop: $('.timeline.page-'+page).offset().top - 20 }, 500)
-//         if(page*per >= count){
-//           $('.load').remove()
-//           return
-//         }
-//         page++
-//         Lately({ 'target': '#bber .datatime' });
-//         // $("#bber a[rel!=link]:has(img)").slimbox();//图片灯箱效果
-//       });
-//     }
-//     $('.button-load').click(function(){
-//       $('.button-load').text('加载中……')
-//       getList()
-//     })
-//   }).catch(err => {
-//     console.log(err)
-//   });
-// }
 
 function urlToLink(str) {
 var re =/\bhttps?:\/\/(?!\S+(?:jpe?g|png|bmp|gif|webp|gif))\S+/g;
