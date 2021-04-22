@@ -4,7 +4,7 @@
 // }
 
 function getbbdata(){
-  var bbsurl = "https://7a68-zhheo-0g8unj30bfbeb210-1302424805.tcb.qcloud.la/json/bber-list.json?sign=76de38899f2c2447e99e8058d5216626&t=1619060348"
+  var bbsurl = bbapiurl
   
   var httpRequest = new XMLHttpRequest();//第一步：建立所需的对象
   httpRequest.open('GET', bbsurl, true);//第二步：打开连接  将请求参数写在url中  ps:"./Ptest.php?name=test&nameone=testone"
@@ -86,9 +86,9 @@ str =str.replace(re_forpic,function (imgurl) {
 str =str.replace(re,function (website) {
   return " <a href='" + website + "'rel='noopener' target='_blank'>↘链接↙</a> ";
 });
-// str = qqWechatEmotionParser(str)
-// return str; 
-// }
+str = qqWechatEmotionParser(str)
+return str; 
+}
 /*
 MIT License - http://www.opensource.org/licenses/mit-license.php
 For usage and examples, visit:
