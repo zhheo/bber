@@ -33,7 +33,7 @@ if (document.querySelector('#bber')) {
             from_icon = '<i class="fas fa-mobile-alt"></i>';
           }else if (item.from.indexOf("iPad") != -1){
             from_icon = '<i class="fas fa-tablet-alt"></i>';
-          }else if (item.from.indexOf("MacBook") != -1){
+          }else if (item.from.indexOf("Mac") != -1){
             from_icon = '<i class="fas fa-laptop"></i>';
           }else if (item.from.indexOf("微信") != -1){
             from_icon = '<i class="fab fa-weixin" style="font-size: 0.6rem"></i>';
