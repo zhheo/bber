@@ -27,7 +27,7 @@ exports.main = async (event, context) => {
         let ws = fs.createWriteStream('/tmp/bber'+CreateTime+'.json', { autoClose: true });
         ws.write(contentJson, 'utf8')
         app.uploadFile({
-            cloudPath: 'json/bber.json',
+            cloudPath: 'json/bber-list.json',
             fileContent: fs.createReadStream('/tmp/bber'+CreateTime+'.json')
         }).then((res) => {
             ws.on('finish', function () {
